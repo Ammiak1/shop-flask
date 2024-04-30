@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Онлайн-магазин</title>
+{% endblock %}
+
+{% block head %}
+<nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+      <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="about">Про магазин</a>
+      <a class="btn btn-outline-primary" href="/cart">Корзина (<span id="cart-count">0</span>)</a>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block body %}
+<script>
+  let cart = JSON.parse('{{ cart|tojson }}' || '[]');
+  document.getElementById('cart-count').innerText = cart.length;
+</script>
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+      <h1 class="display-4 fw-normal text-body-emphasis">Приобрести донат</h1>
+      <p class="fs-5 text-body-secondary">Здесь вы можете приобрести привилегию на сервер ServerExample по выходным ценам!</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+    <div class="row mb-4 text-center">
+    {% for el in data %}
+    <div class="col">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">{{ el.title }}</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{ el.price }} <small class="text-muted">рублей</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+                {% for i in range(4) %}  {% if i < el.text.split('+ ').__len__() %}  <li>{{ el.text.split('+ ')[i] }}</li>
+                    {% else %}
+                        <li class="text-muted">ᅟ</li>  {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="/add_to_cart/{{ el.id }}" class="btn btn-lg btn-block btn-outline-primary">Купить</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

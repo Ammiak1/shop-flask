@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block head %}
+    </div>
+{% endblock %}
+
+{% block title %}
+<title>Zhezl Shop - Корзина</title>
+{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <h1>Ваша корзина</h1>
+
+  {% if cart %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Товар</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Итого</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>
+          <a href="#">{{ Item.query.get(item.id).title }}</a>
+        </td>
+        <td>{{ Item.query.get(item.id).price }} руб.</td>
+        <td>
+          <form action="/update_cart/{{ item.id }}" method="POST" class="d-flex align-items-center">
+            <input type="number" name="quantity" min="1" value="{{ item.quantity }}" style="width: 48px; height: 31px">
+            <button type="submit" class="btn btn-sm btn-primary ms-1">Изменить</button>
+          </form>
+        </td>
+        <td>{{ item.quantity * Item.query.get(item.id).price }} руб.</td>
+        <td class="d-flex align-items-center">
+          <a href="/remove_from_cart/{{ item.id }}" class="btn btn-sm btn-danger">Удалить</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="/" class="btn btn-secondary">Продолжить покупки</a>
+  <a href="/checkout" class="btn btn-primary">Оформить заказ</a>
+  {% else %}
+  <p>Ваша корзина пуста.</p>
+  <a href="/" class="btn btn-secondary">На главную</a>
+  {% endif %}
+</div>
+{% endblock %}

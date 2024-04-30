@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+    </div>
+{% endblock %}
+
+{% block title %}
+  <title>Оформление заказа</title>
+{% endblock %}
+
+{% block body %}
+  <h1>Оформление заказа на сумму {{ total_price }} рублей</h1>
+  <form method="post">
+    <div class="mb-3">
+      <label for="card_number" class="form-label">Номер карты</label>
+      <input type="text" class="form-control" id="card_number" name="card_number" required maxlength="19">
+    </div>
+    <div class="mb-3">
+      <label for="expiry_date" class="form-label">Срок действия</label>
+      <input type="text" class="form-control" id="expiry_date" name="expiry_date" required maxlength="5">
+    </div>
+    <div class="mb-3">
+      <label for="cvv" class="form-label">CVV код</label>
+      <input type="text" class="form-control" id="cvv" name="cvv" required maxlength="3">
+    </div>
+    <button type="submit" class="btn btn-primary">Оплатить</button>
+  </form>
+
+  <script>
+    document.getElementById('card_number').addEventListener('input', function (e) {
+      var target = e.target;
+      var input = target.value.replace(/\D/g, '').substring(0, 16);
+      var cardNumber = input.match(/.{1,4}/g).join(' ');
+      target.value = cardNumber;
+    });
+
+    document.getElementById('expiry_date').addEventListener('input', function (e) {
+      var target = e.target;
+      var input = target.value.replace(/\D/g, '').substring(0, 4);
+      var expiryDate = input.replace(/(\d{2})(\d{2})/, '$1/$2');
+      target.value = expiryDate;
+    });
+
+    document.getElementById('cvv').addEventListener('input', function (e) {
+      var target = e.target;
+      var input = target.value.replace(/\D/g, '').substring(0, 3);
+      target.value = input;
+    });
+  </script>
+{% endblock %}

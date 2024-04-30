@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    </div>
+{% endblock %}
+
+{% block title %}
+<title>Редактирование товаров</title>
+{% endblock %}
+
+{% block body %}
+<h1 align="center">Список товаров</h1><br>
+  <main>
+    <div class="container">
+    <div class="row mb-4 text-center">
+    {% for el in data %}
+    <div class="col">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">{{ el.title }}</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{ el.price }} <small class="text-muted">рублей</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+                {% for i in range(4) %}  {% if i < el.text.split('+ ').__len__() %}  <li>{{ el.text.split('+ ')[i] }}</li>
+                    {% else %}
+                        <li class="text-muted">ᅟ</li>  {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="/delete_item/{{ el.id }}" class="btn btn-lg btn-block btn-outline-primary">Удалить</a>
+              <a href="/edit_item/{{ el.id }}" class="btn btn-lg btn-block btn-outline-primary">Редактировать</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block head %}
+    </div>
+{% endblock %}
+
+{% block title %}
+  <title>Редактирование товара</title>
+{% endblock %}
+
+{% block body %}
+  <h1>Редактирование товара</h1>
+  <form method="post">
+    <div class="mb-3">
+      <label for="title" class="form-label">Название</label>
+      <input type="text" class="form-control" id="title" name="title" value="{{ item.title }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Цена</label>
+      <input type="number" class="form-control" id="price" name="price" value="{{ item.price }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="text" class="form-label">Описание</label>
+      <textarea class="form-control" id="text" name="text" rows="3" required>{{ item.text }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+  </form>
+{% endblock %}
